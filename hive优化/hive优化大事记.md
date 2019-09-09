@@ -1,4 +1,5 @@
 ### 项目初期
+
 打包大小
 模块|尺寸
 -|:-:
@@ -13,6 +14,7 @@ project|712KB
 - @core开启tree-shaking
 
 打包大小
+
 模块|尺寸
 -|:-:
 vendor.dll.js|838KB
@@ -27,6 +29,7 @@ project|472KB
 - 将react-awesome-popover加到vendor.dll中
 
 打包大小
+
 模块|尺寸
 -|:-:
 vendor.dll.js|878KB
@@ -43,6 +46,7 @@ project|238KB
 - 将moment与moment-zone从dll抽离至common-plugin
 
 打包尺寸
+
 模块|尺寸
 -|:-:
 vendor.dll.js|435KB
