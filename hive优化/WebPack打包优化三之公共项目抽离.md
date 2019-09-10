@@ -244,8 +244,8 @@ export const withIconFilter = (filterType: FilterType) => {
 又优化了一版之后，使用简洁多了，如下：
 ```javascript
 export const withIconFilter = lazyHoc(() => import(
-/* webpackChunkName: 'withIconFilter' */
-'../public/hoc/withIconFilter'
+  /* webpackChunkName: 'withIconFilter' */
+  '../public/hoc/withIconFilter'
 ));
 ```
 `lazyHoc`实现如下：
