@@ -116,6 +116,39 @@ externals竟然可以通过函数去匹配，满足条件的就使用外部包�
 
 > 说起来容易，做起来难，我花了一个小时才将那些不同引入方式整理出来，并一一对照去还原导出对象的结构。
 
+实际entry.tsx结构如下：
+```javascript
+export default {
+  enums,
+  utils,
+  business,
+  containers,
+  hoc,
+  initFeToolkit,
+  store: commonStore,
+  Moon: Moon,
+  wrapper: {
+    authority: AuthorityWrapper,
+    errorBoundary: ErrorBoundary,
+  },
+  public: {
+    enums,
+    hoc,
+    moon: {
+      date,
+      client,
+      role,
+      resourceCode,
+      format,
+      abFeature,
+      behavior,
+      message: _message,
+      base: moonBase,
+    }
+  }
+};
+```
+
 此时，我已经实现了将@core/common打包结果public.js从index.html直接引入，让20多个子项目不改动一行代码成功从public.js读取所有common引用，平滑升级成功！
 
 但是页面渲染出来之后，随便点了点便发现了几处问题：其中一个最严重的问题就是`globalFilter`下拉的级联功能没了！好好的怎么就没了呢，我也没动`fe-toolkit`的代码啊！
@@ -208,6 +241,39 @@ export const withIconFilter = (filterType: FilterType) => {
   };
 };
 ```
+又优化了一版之后，使用简洁多了，如下：
+```javascript
+export const withIconFilter = lazyHoc(() => import(
+/* webpackChunkName: 'withIconFilter' */
+'../public/hoc/withIconFilter'
+));
+```
+`lazyHoc`实现如下：
+```javascript
+const lazyHoc: ILazyHoc = (factory, loading = <></>) => {
+  return (...rest: any[]) => {
+    const Lazy = React.lazy(async () => {
+    const Component = (await factory()).default(...rest);
+    return {
+      default: props => <Component {...props} />
+    };
+  });
+  return (props: IKeyValueMap) => <React.Suspense fallback={loading}>
+      <Lazy {...props} />
+    </React.Suspense>;
+  };
+};
+
+type ILazyHoc = (factory: () => Promise<{
+  default: IHoc;
+}>, loading?: React.ReactElement) => (...rest: any[]) => React.FunctionComponent<(props: IKeyValueMap) => JSX.Element>;
+
+type IHoc = (...rest: any[]) => React.ComponentClass<any, any>;
+
+export default lazyHoc;
+```
+
+
 拆分将近10个Hoc之后，public.js只剩`283KB`了，好吧，我满足了。
 于是抽离公共代码与优化加载性能两个目的便达到了，记录于此，以便不时之需……
 
