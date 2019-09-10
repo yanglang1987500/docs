@@ -1,6 +1,6 @@
 # webpack打包优化三之公共项目抽离
 
-经过前两轮的优化，我们的项目打包体积已经瘦身了将近一半。拿reactiveWO来说，起初是`818KB`，目前已经优化到了`688KB`，可见tree-shaking与externals抽离效果确实可见一斑。
+经过前两轮的优化，我们的项目打包体积已经瘦身了将近一半。拿dailyMap与project来说，起初是`606KB`与`712KB`，目前已经优化到了`268KB`与`472KB`，可见tree-shaking与externals抽离效果确实可见一斑。
 
 然而，目前还存在一个问题：
 > 我们的项目是打包到Moon系统里作为独立MPA布署的，每个页面之间都包含着同一份公共代码。拿Header举例，以前都是Include header页去公用，而现在虽然React项目中是共用的Header组件，但实际上打完包出来嵌入到Moon系统中却没有共享。这部分代码都在@core/common项目中，若全部使用到，单独打包出来将近`840KB`！
