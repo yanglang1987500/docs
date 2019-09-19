@@ -478,7 +478,7 @@ export default class TaskQueue<T extends Task> {
 
 而且提供了普通模式与鸡血模式两种模式。
 
-普通模式用来开发与调度，
+普通模式用来开发与调试，
 
 鸡血模式用于实际应用。
 
