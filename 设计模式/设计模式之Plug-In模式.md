@@ -297,7 +297,7 @@ EventReport.registe(videoDom);
         return;
       }
     }
-	}
+  }
 
 ```
 
