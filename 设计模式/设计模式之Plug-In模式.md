@@ -242,61 +242,61 @@ EventReport.registe(videoDom);
 再贴一个心跳的上报插件代码
 ```javascript
   class HBStatHandler{
-		ended(e,videoInfo){
-			H._debug.log('HBStatHandler ended-----');
-			var data = $.extend(base,{
-				cf:videoInfo.info.clip_type,
-				vts:videoInfo.info.duration,
-				pay:videoInfo.info.paymark,
-				ct:e.target.currentTime,
+    ended(e,videoInfo){
+      H._debug.log('HBStatHandler ended-----');
+      var data = $.extend(base,{
+        cf:videoInfo.info.clip_type,
+        vts:videoInfo.info.duration,
+        pay:videoInfo.info.paymark,
+        ct:e.target.currentTime,
                 suuid:videoInfo.suuid,
-				idx:++idx,
-				ht:2
-			});
-			stk.create(data,url);
-		}
+        idx:++idx,
+        ht:2
+      });
+      stk.create(data,url);
+    }
 
-		count(e,videoInfo){
-			var data = $.extend(base,{
-				cf:videoInfo.info.clip_type,
-				vts:videoInfo.info.duration,
-				pay:videoInfo.info.paymark,
+    count(e,videoInfo){
+      var data = $.extend(base,{
+        cf:videoInfo.info.clip_type,
+        vts:videoInfo.info.duration,
+        pay:videoInfo.info.paymark,
                 suuid:videoInfo.suuid,
-				ct:e.target.currentTime
-			});
-			//15秒上报
-			if(videoInfo.count === 15){
+        ct:e.target.currentTime
+      });
+      //15秒上报
+      if(videoInfo.count === 15){
         H._debug.log('HBStatHandler 15秒上报');
-				data.idx = ++idx;
-				data.ht = 3;
-				stk.create(data,url);
-				return;
-			}
-			//45秒上报
-			if(videoInfo.count === 45){
+        data.idx = ++idx;
+        data.ht = 3;
+        stk.create(data,url);
+        return;
+      }
+      //45秒上报
+      if(videoInfo.count === 45){
         H._debug.log('HBStatHandler 45秒上报');
-				data.idx = ++idx;
-				data.ht = 4;
-				stk.create(data,url);
-				return;
-			}
-			//60秒上报
-			if(videoInfo.count === 60){
+        data.idx = ++idx;
+        data.ht = 4;
+        stk.create(data,url);
+        return;
+      }
+      //60秒上报
+      if(videoInfo.count === 60){
         H._debug.log('HBStatHandler 60秒上报');
-				data.idx = ++idx;
-				data.ht = 5;
-				stk.create(data,url);
-				return;
-			}
-			//60秒后每2分钟上报一次
-			if(((videoInfo.count-60)/60)%2==0){
+        data.idx = ++idx;
+        data.ht = 5;
+        stk.create(data,url);
+        return;
+      }
+      //60秒后每2分钟上报一次
+      if(((videoInfo.count-60)/60)%2==0){
         H._debug.log('HBStatHandler 每2分钟上报一次 videoInfo.count='+videoInfo.count);
-				data.idx = ++idx;
-				data.ht = 6;
-				stk.create(data,url);
-				return;
-			}
-		}
+        data.idx = ++idx;
+        data.ht = 6;
+        stk.create(data,url);
+        return;
+      }
+    }
 	}
 
 ```
