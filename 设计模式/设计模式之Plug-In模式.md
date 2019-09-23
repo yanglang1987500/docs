@@ -55,10 +55,6 @@ EventReport.registe(videoDom);
 
   var seekingStart = 0;
 
-  window.onerror = function(msg){
-    H._debug.error(msg);
-  }
-
   VideoMonitor.prototype = {
     constructor: VideoMonitor,
     init:function(videoDom, videoInfo){
